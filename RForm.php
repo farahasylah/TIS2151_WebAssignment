@@ -135,25 +135,27 @@ $(document).ready(function(){
 	<a class="scrollToTop" href="#"></a>
 </body>
 </html>
-
 <?php 
- 
-if(isset($_POST['submit']))
-{
-	$name = $_POST["name"];
-	$ic = $_POST["ic/passport"];
-	$gender = $_POST["gender"];
-	$affiliation = $_POST["affiliation"];
-	$nationality = $_POST["nationality"];
-	$tel = $_POST["tel"];
-	$email = $_POST["email"];
+  $host="localhost";
+  $user="root";
+  $password=""; 
+  $error="";
+  $connection=mysql_connect($host,$user,$password) or die(mysql_error());
+  $db=mysql_select_db("reserveform",$connection) or die(mysql_error());
 
-	
-	mysql_query("INSERT INTO `Account` (`acc_ID`, `Acc_email`, `password`, `firstname`, `lastname`, `phone_no`, `street_address`, `id`)
-			  VALUES ('$name', '$ic', '$gender', '$affiliation', '$nationality', '$tel', '$email', NULL);"); 
-	echo '<script type="text/javascript">alert("Reservation Success!");
-				</script>';
-	$last_ID = mysql_insert_id();
-}
-mysql_close($connection);
+  if (isset($_POST['submit'])) {
+
+    $name=$_POST['name']; 
+    $ic=$_POST['ic']; 
+    $gender=$_POST['gender']; 
+    $affiliation=$_POST['affiliation']; 
+    $nationality=$_POST['nationality']; 
+    $contact=$_POST['contact']; 
+    $email=$_POST['email']; 
+
+    $query=mysql_query("INSERT INTO userdetails values(NULL,'$name','$ic','$gender', '$affiliation', '$nationality', '$contact', '$email')");
+      echo "<script type='text/javascript'> alert('Submitted Successfully, Thank You!');
+             window.location.href = 'Query.php';
+             </script>";
+  }     
 ?>
